@@ -53,6 +53,7 @@
     <Compile Include="Devices\IDeviceObserver.cs" />
     <Compile Include="Devices\IDevicesContainer.cs" />
     <Compile Include="Devices\IPlayer.cs" />
+    <Compile Include="Devices\WebCamera\IWebCameraEngine.cs" />
     <Compile Include="Logging\ILogger.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Stream\IMediaFormat.cs" />

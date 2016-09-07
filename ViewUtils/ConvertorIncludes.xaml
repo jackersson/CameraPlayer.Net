@@ -1,0 +1,16 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:convertors="clr-namespace:ViewUtils.Convertors">
+    
+    <convertors:UidToSpacedFormattedString  x:Key="UidToSpacedFormattedString" />
+    <convertors:InverseBooleanToVisibility  x:Key="InverseBooleanToVisibility" />
+    <convertors:BooleanToIcon               x:Key="BooleanToIcon"              />
+    <convertors:StringEqualityToIcon        x:Key="StringEqualityToIcon"       />
+    <convertors:LongToDateTime              x:Key="LongToDateTime"             />
+    <convertors:ObjectCompareConverter      x:Key="ObjectCompareConverter"     />
+    <convertors:ObjectCompareToVisibillity  x:Key="ObjectCompareToVisibillity" />
+
+
+    
+    <BooleanToVisibilityConverter          x:Key="BooleanToVisibility"/>
+</ResourceDictionary>

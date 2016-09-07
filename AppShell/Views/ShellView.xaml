@@ -5,6 +5,8 @@
                       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                       xmlns:controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
                       xmlns:viewModels="clr-namespace:AppShell.ViewModels"
+                      xmlns:imageItem="clr-namespace:ImageViewer.Views.ImageItem;assembly=ImageViewer"
+                      xmlns:views="clr-namespace:AppShell.Views"
                       mc:Ignorable="d"
                       BorderThickness="1"
                       WindowStartupLocation="CenterScreen"
@@ -28,27 +30,42 @@
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="50"/>
                 <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="2*"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
-                <RowDefinition Height="44"/>
                 <RowDefinition Height="5*"/>
-                <RowDefinition Height="25"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="16"/>
             </Grid.RowDefinitions>
 
-           <ContentControl Grid.Row="1" Grid.Column="0" x:Name="ToolBar" />
 
-            <ContentControl Grid.Row="0" Grid.Column="2" Grid.RowSpan="2" Panel.ZIndex="100" x:Name="FlyoutControl"  />
+            <imageItem:Normal 
+                Width="{Binding ControlWidth, Mode=OneWayToSource}"
+                Height="{Binding ControlHeight, Mode=OneWayToSource}"
+                HorizontalAlignment="Stretch"
+                VerticalAlignment="Stretch"
+                DataContext="{Binding Image}"
+                Grid.Column="2"
+                Grid.Row   ="0"> 
+            </imageItem:Normal>
 
-            <ContentControl Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" x:Name="TabControl"  />
+            <views:PlayerView
+                 DataContext="{Binding Player}"
+                 Grid.Column ="2"
+                 Grid.Row    ="1">
+            </views:PlayerView>
 
-            <ContentControl VerticalAlignment="Top" Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="3" x:Name="MainMenu"/>
+            <views:DevicesEnumeratorView
+                 DataContext="{Binding Devices}"
+                 Grid.Column ="2"
+                 Grid.Row    ="2">
+            </views:DevicesEnumeratorView>
 
-            <ContentControl Grid.Column="2" Grid.Row="0" HorizontalAlignment="Right" x:Name="LoginInformation"/>
 
-            <ContentControl VerticalAlignment="Stretch" Grid.Column="0" Grid.ColumnSpan="3" 
-                            Grid.Row="2" HorizontalAlignment="Stretch" x:Name="StatusControl"/>
-            
+
+
         </Grid>
     </Grid>
 </controls:MetroWindow>

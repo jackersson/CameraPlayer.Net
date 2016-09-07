@@ -2,5 +2,5 @@
 
 namespace BioContracts.Application
 {
-  public interface IAppManager : IStartable {}
+  public interface IAppManager : IStartable, IStopable {}
 }

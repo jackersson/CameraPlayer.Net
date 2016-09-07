@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using AForge.Video.DirectShow;
+using Accord.Video.DirectShow;
 using BioContracts.Stream;
 
 namespace BioCaptureDevices.Common

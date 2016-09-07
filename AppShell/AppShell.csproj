@@ -65,6 +65,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\MahApps.Metro.1.2.4.0\lib\net45\System.Windows.Interactivity.dll</HintPath>
       <Private>True</Private>
@@ -93,7 +94,15 @@
     </Compile>
     <Compile Include="Logging\NLogger.cs" />
     <Compile Include="ShellBootstrapper.cs" />
+    <Compile Include="ViewModels\DevicesEnumeratorViewModel.cs" />
+    <Compile Include="ViewModels\PlayerViewModel.cs" />
     <Compile Include="ViewModels\ShellViewModel.cs" />
+    <Compile Include="Views\DevicesEnumeratorView.xaml.cs">
+      <DependentUpon>DevicesEnumeratorView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\PlayerView.xaml.cs">
+      <DependentUpon>PlayerView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\ShellView.xaml.cs">
       <DependentUpon>ShellView.xaml</DependentUpon>
     </Compile>
@@ -137,12 +146,36 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\ApplicationResources\ApplicationResources.csproj">
+      <Project>{56232512-1727-4ac2-839f-391b19ad439b}</Project>
+      <Name>ApplicationResources</Name>
+    </ProjectReference>
     <ProjectReference Include="..\BioContracts\BioContracts.csproj">
       <Project>{4cbdb4c3-158b-4ed8-8999-068789a537a0}</Project>
       <Name>BioContracts</Name>
     </ProjectReference>
+    <ProjectReference Include="..\ImageViewer\ImageViewer.csproj">
+      <Project>{f029698f-9a23-4a6a-8c0d-59a4ee8d49ab}</Project>
+      <Name>ImageViewer</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Utils\Utils.csproj">
+      <Project>{D930088F-BF3B-4E32-8804-79E307C73FDB}</Project>
+      <Name>Utils</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ViewUtils\ViewUtils.csproj">
+      <Project>{3d6f74fb-9c0e-4dec-a53d-9ddcff017832}</Project>
+      <Name>ViewUtils</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Page Include="Views\DevicesEnumeratorView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\PlayerView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\ShellView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

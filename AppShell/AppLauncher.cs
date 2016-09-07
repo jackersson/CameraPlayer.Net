@@ -71,7 +71,7 @@ namespace AppShell
 
         if (!string.IsNullOrEmpty(exeDirectory))
         {
-          string[] files = { "ApplicationEngine.dll" };
+          string[] files = { "DevicesEngine.dll", "ApplicationEngine.dll" };
 
           files
             .Select(Assembly.LoadFrom)

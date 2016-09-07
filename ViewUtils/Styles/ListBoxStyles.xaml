@@ -1,0 +1,34 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+
+    <Style x:Key="WrapListBoxStyle" TargetType="ListBox" >
+        <Setter Property="HorizontalAlignment" Value="Stretch"/>
+        <Setter Property="VerticalAlignment"   Value="Stretch"/>
+        <Setter Property="SelectionMode"       Value="Single"/>
+        <Setter Property="BorderBrush"         Value="{DynamicResource DarkGrayBorderBrush}"/>
+        <Setter Property="BorderThickness"     Value="1"/>
+        <Setter Property="Background"          Value="{x:Null}"/>
+
+        <Setter Property="ScrollViewer.HorizontalScrollBarVisibility"  Value="Disabled"/>
+
+
+        <Setter Property="ItemContainerStyle">
+            <Setter.Value>
+                <Style TargetType="{x:Type ListBoxItem}">
+                    <Setter Property="HorizontalContentAlignment" Value="Left"/>
+                    <Setter Property="VerticalContentAlignment" Value="Center"/>
+                </Style>
+            </Setter.Value>
+        </Setter>
+
+        <Setter Property="ItemsPanel">
+            <Setter.Value>
+                <ItemsPanelTemplate>
+                    <WrapPanel VerticalAlignment="Stretch" HorizontalAlignment="Stretch"/>
+                </ItemsPanelTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+</ResourceDictionary>

@@ -1,0 +1,34 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary  Source="pack://application:,,,/ApplicationResources;component/Icons.xaml"            />
+        <ResourceDictionary  Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.xaml"         />
+        <ResourceDictionary  Source="pack://application:,,,/MahApps.Metro;component/Styles/VS/Colors.xaml"        />
+        <ResourceDictionary  Source="pack://application:,,,/MahApps.Metro;component/Styles/Fonts.xaml"            />
+        <ResourceDictionary  Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/BaseDark.xaml" />
+
+        <ResourceDictionary Source="pack://application:,,,/ViewUtils;component/Styles/ColorsStyles.xaml"       />
+        <ResourceDictionary Source="pack://application:,,,/ViewUtils;component/ConvertorIncludes.xaml"         />
+        <ResourceDictionary Source="pack://application:,,,/ViewUtils;component/Styles/ButtonsStyles.xaml"      />
+        <ResourceDictionary Source="pack://application:,,,/ViewUtils;component/Styles/ListBoxStyles.xaml"      />
+
+        <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/controls.buttons.xaml"      />
+        <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/controls.tabcontrol.xaml"      />
+
+
+    </ResourceDictionary.MergedDictionaries>
+
+    <!--<ResourceDictionary x:Key="StylePacksIncludes"
+                        Source="pack://application:,,,/ViewUtils;component/Styles/StylePacksIncludes.xaml" />
+    <ResourceDictionary x:Key="ConvertorIncludes" 
+                        Source="pack://application:,,,/ViewUtils;component/ConvertorIncludes.xaml"         />
+    <ResourceDictionary x:Key="ButtonsStyles"     
+                        Source="pack://application:,,,/ViewUtils;component/Styles/ButtonsStyles.xaml"      />
+    <ResourceDictionary x:Key="ColorsStyle"       
+                        Source="pack://application:,,,/ViewUtils;component/Styles/ColorsStyles.xaml"       />
+    <ResourceDictionary x:Key="ListBoxStyles"  
+                        Source="pack://application:,,,/ViewUtils;component/Styles/ListBoxStyles.xaml"     /> -->
+
+</ResourceDictionary>
+

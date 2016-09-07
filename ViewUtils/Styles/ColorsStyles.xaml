@@ -1,0 +1,22 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    
+    
+    <SolidColorBrush x:Key="AccentSelectedColorBrush" Color="Transparent"/>
+    <SolidColorBrush x:Key="IdealForegroundColorBrush" Color="Transparent"/>
+    
+    <!-- TextColors -->
+    <Color x:Key="TextColor">#FFF1F1F1</Color>
+    <Brush x:Key="TextBrush">#FFF1F1F1</Brush>
+    <SolidColorBrush x:Key="BlueForeground" Color="#FF5E82A8"/>
+    <SolidColorBrush x:Key="GrayForeground" Color="Gray"     />
+    <!-- /TextColors --> 
+
+    <!-- BorederBrush -->
+    <SolidColorBrush x:Key="DarkGrayBorderBrush" Color="#4C808080" />
+    <!-- /BorederBrush -->
+
+    <!-- Background -->
+    <SolidColorBrush x:Key="BlackBakcgroundBrush" Color="#FF3E3E40" />
+    <!-- Background -->
+</ResourceDictionary>

@@ -1,0 +1,148 @@
+﻿<ResourceDictionary 
+                   xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                   xmlns:cal="http://www.caliburnproject.org"
+                   xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                   xmlns:imageItem="clr-namespace:ImageViewer.Views.ImageItem"
+                   mc:Ignorable="d">
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="pack://application:,,,/ImageViewer;component/Styles/ImageItemStyle.xaml" />
+
+    </ResourceDictionary.MergedDictionaries>
+
+    <Style x:Key="ImageViewScrollViewerStyle" TargetType="ScrollViewer">
+        <Setter Property="Tag" Value="{Binding ElementName=ScrollViewerGrid, Path=DataContext}" />
+        <Setter Property="cal:Message.Attach" Value="[Event Loaded]        = [Action Zoom(CurrentImageScrollViewer.ActualWidth, CurrentImageScrollViewer.ActualHeight)];
+                                                     [Event SizeChanged]   = [Action Zoom(CurrentImageScrollViewer.ActualWidth, CurrentImageScrollViewer.ActualHeight)]" />
+        <Setter Property="HorizontalScrollBarVisibility" Value="Auto" />
+        <Setter Property="VerticalScrollBarVisibility"   Value="Auto"     />
+        <Setter Property="HorizontalAlignment"           Value="Stretch"  />
+        <Setter Property="VerticalAlignment"             Value="Stretch"  />
+    </Style>
+
+    <ControlTemplate x:Key="ToggleButtonControlTemplate" TargetType="{x:Type ToggleButton}">
+        <Grid>
+            <Ellipse Fill="{TemplateBinding Background}" Margin="4" StrokeThickness="0"/>
+            <Ellipse x:Name="ellipsebg" Fill="{DynamicResource AccentColorBrush}" Margin="4" Opacity="0" StrokeThickness="0"/>
+            <Ellipse x:Name="ellipse" Margin="4" Stroke="{TemplateBinding BorderBrush}" 
+                     StrokeThickness="{Binding BorderThickness.Left, RelativeSource={RelativeSource TemplatedParent}}"/>
+            <ContentPresenter x:Name="PART_ContentPresenter" 
+                              ContentTemplate="{TemplateBinding ContentTemplate}"
+                              Content="{TemplateBinding Content}" 
+                              ContentStringFormat="{TemplateBinding ContentStringFormat}" 
+                              HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" 
+                              Margin="{TemplateBinding Padding}" 
+                              RecognizesAccessKey="True" 
+                              SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" 
+                              VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+        </Grid>
+        <ControlTemplate.Triggers>
+            <Trigger Property="IsChecked" Value="True">
+                <Setter Property="Foreground" Value="{DynamicResource IdealForegroundColorBrush}"/>
+                <Setter Property="Stroke" TargetName="ellipse" Value="{DynamicResource AccentColorBrush}"/>
+            </Trigger>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Opacity" TargetName="ellipse" Value="1"/>
+            </Trigger>
+            <Trigger Property="IsMouseOver" Value="False">
+                <Setter Property="Opacity" TargetName="ellipse" Value="0.7"/>
+            </Trigger>
+            <Trigger Property="IsEnabled" Value="False">
+                <Setter Property="Foreground" Value="{DynamicResource GrayBrush7}"/>
+                <Setter Property="Opacity" TargetName="ellipse" Value="0.3"/>
+            </Trigger>
+        </ControlTemplate.Triggers>
+    </ControlTemplate>
+
+    <ControlTemplate x:Key="ItemWithBorderTemplate" TargetType="ContentControl">
+        <Grid>
+            <ContentPresenter Content="{TemplateBinding Content}"
+                              ContentTemplate="{TemplateBinding ContentTemplate}"
+                              Cursor="{TemplateBinding Cursor}"
+                              HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                              VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+            <Border Background="{TemplateBinding Background}"  VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
+                    BorderBrush="{TemplateBinding BorderBrush}"
+                    Margin="{TemplateBinding Padding}"
+                    BorderThickness="{TemplateBinding BorderThickness}" >
+                <Border.Effect>
+                    <DropShadowEffect/>
+                </Border.Effect>
+            </Border>
+        </Grid>
+    </ControlTemplate>
+
+
+    <Style x:Key="BaseCircleButtonStyle" TargetType="Button" BasedOn="{StaticResource MetroCircleButtonStyle}">
+        <Setter Property="Width"           Value="40"       />
+        <Setter Property="Height"          Value="40"       />
+        <Setter Property="BorderBrush"     Value="#7F3587BD"/>
+        <Setter Property="BorderThickness" Value="1"        />
+    </Style>
+
+
+
+    <ControlTemplate x:Key="GeneralImageViewContentTemplate" TargetType="ContentControl">
+        <Grid VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="2*"/>
+                <RowDefinition Height="1*"/>
+            </Grid.RowDefinitions>
+
+            <ScrollViewer x:Name="CurrentImageScrollViewer" Grid.Column="0" Grid.Row="0" >
+                <imageItem:Normal DataContext="{Binding ActiveItem, Mode=OneWay}" Margin="10,0,5,0"
+                                  VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                <ScrollViewer.Style>
+                    <Style TargetType="ScrollViewer" BasedOn="{StaticResource ImageViewScrollViewerStyle}">
+                        <Setter Property="Grid.RowSpan" Value="1"/>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding ElementName=ShowHideListButton, Path=IsChecked}" Value="False">
+                                <Setter Property="Grid.RowSpan" Value="2"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </ScrollViewer.Style>
+            </ScrollViewer>
+
+            <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Disabled" Grid.Row="1" 
+                          Tag="{Binding ElementName=ScrollViewerGrid, Path=DataContext}" BorderBrush="Green"
+                          Visibility="{Binding ElementName=ShowHideListButton, Path=IsChecked, Converter={StaticResource BooleanToVisibility}}">
+                <ItemsControl Name="IdentifyImageControl"   BorderThickness="1" BorderBrush="#FF3F3F46"                 
+                              ItemsSource="{Binding Items}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Grid VerticalAlignment="Center" HorizontalAlignment="Center" IsSharedSizeScope="True">
+                                <imageItem:Short Margin="5,0,5,0" Tag="{Binding ElementName=ScrollViewerGrid, Path=DataContext}" 
+                                                DataContext="{Binding}"
+                                                VerticalAlignment="Center" HorizontalAlignment="Center" 
+                                                Template="{StaticResource ItemWithBorderTemplate}"
+                                                cal:Action.TargetWithoutContext="{Binding ElementName=ScrollViewerGrid, Path=DataContext}"
+                                                cal:Message.Attach="[Event PreviewMouseLeftButtonDown] = [Action MakeActive($this)]"/>
+                            </Grid>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <WrapPanel Orientation="Horizontal"/>
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                    <ItemsControl.Template>
+                        <ControlTemplate TargetType="{x:Type ItemsControl}">
+                            <ScrollViewer HorizontalScrollBarVisibility="Auto" 
+                                          VerticalScrollBarVisibility="Disabled" 
+                                          Tag="{Binding ElementName=ScrollViewerGrid, Path=DataContext}">
+                                <ItemsPresenter />
+                            </ScrollViewer>
+                        </ControlTemplate>
+                    </ItemsControl.Template>
+                </ItemsControl>
+            </ScrollViewer>
+        </Grid>
+    </ControlTemplate>
+
+</ResourceDictionary>

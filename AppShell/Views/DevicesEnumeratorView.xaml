@@ -1,0 +1,44 @@
+﻿<UserControl x:Class="AppShell.Views.DevicesEnumeratorView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
+             xmlns:viewModels="clr-namespace:AppShell.ViewModels"
+             mc:Ignorable="d" 
+             d:DesignHeight="80" d:DesignWidth="300"
+              d:DataContext="{d:DesignInstance viewModels:DevicesEnumeratorViewModel, IsDesignTimeCreatable=False}"
+             >
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/ViewUtils;component/ConvertorIncludes.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+
+    <Grid x:Name="GridLayout">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="32"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="48"/>
+
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="48"/>
+        </Grid.RowDefinitions>
+
+        <ComboBox ItemsSource="{Binding Devices}"
+                  SelectedItem="{Binding SelectedDevice, Mode=TwoWay}" 
+                  controls:TextBoxHelper.Watermark="{Binding DevicesCount}"               
+                  HorizontalAlignment="Stretch"
+                  VerticalAlignment="Stretch" 
+                  Grid.Row="0"                    
+                  Grid.Column="1" Grid.ColumnSpan="2">
+        </ComboBox>
+
+        <Image Grid.Column="0" Grid.Row="0" HorizontalAlignment="Stretch" 
+               VerticalAlignment="Stretch" 
+               Source="{Binding Connected, Converter={StaticResource BooleanToIcon}}" />
+    </Grid>
+</UserControl>

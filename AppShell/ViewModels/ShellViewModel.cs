@@ -1,84 +1,101 @@
-﻿using Caliburn.Micro;
+﻿using System;
+using System.Drawing;
+using System.Windows.Media;
+using BioContracts.Devices;
+using BioContracts.Devices.WebCamera;
+using BioContracts.Logging;
+using BioContracts.Stream;
+using Caliburn.Micro;
+using Castle.Windsor;
+using ImageViewer.ViewModels;
+using Utils;
 
 namespace AppShell.ViewModels
 {
-  public sealed class ShellViewModel : Screen
+  public sealed class ShellViewModel : Screen, IDeviceObserver<IStreamData>
   {
-    public ShellViewModel()
+    public ShellViewModel(IWindsorContainer container)
     {
       DisplayName = "Main window";
+
+      _container = container;
+      TryResolveDependencies(container);
     }
 
-    private object _mainMenu;
-    public object MainMenu
+    private void TryResolveDependencies(IWindsorContainer container)
     {
-      get { return _mainMenu; }
+      try
+      {
+        _logger = container.Resolve<ILogger>();
+
+        _devicesContainer = container.Resolve<IDevicesContainer>();
+
+        Devices = new DevicesEnumeratorViewModel(container);
+        Devices.DeviceChanged += OnDeviceChanged;
+
+        Image = new ImageItemViewModel(container) {ControlWidth = 500, ControlHeight = 500};
+      }
+      catch (Exception exception) {
+        _logger?.Error(exception);
+      }
+
+    }
+
+    private void OnDeviceChanged(string deviceName)
+    {
+      var engine = _devicesContainer.Resolve<IWebCameraEngine>();
+      engine.Add(deviceName);
+      engine.Subscribe(this, deviceName);
+      Player = new PlayerViewModel(engine.GetPlayer(deviceName));
+    }
+
+    private PlayerViewModel _player;
+    public PlayerViewModel Player
+    {
+      get { return _player; }
       set
       {
-        if (_mainMenu == value) return;
-        _mainMenu = value;
-        NotifyOfPropertyChange(() => MainMenu);
+        if (value != null && _player != value)
+          _player = value;
+
+        NotifyOfPropertyChange(() => Player);
       }
     }
 
-    private object _toolBar;
-    public object ToolBar
+    public ImageItemViewModel Image { get; set; }
+
+    private DevicesEnumeratorViewModel _devices;
+    public DevicesEnumeratorViewModel Devices
     {
-      get { return _toolBar; }
+      get { return _devices; }
       set
       {
-        if (_toolBar == value) return;
-        _toolBar = value;
-        NotifyOfPropertyChange(() => ToolBar);
+        if (value != null && _devices != value)
+          _devices = value;
+
+        NotifyOfPropertyChange(() => Devices);
       }
     }
 
-    private object _tabControl;
-    public object TabControl
+    private ILogger           _logger;
+    private readonly IWindsorContainer _container;
+    private IDevicesContainer _devicesContainer;
+
+    public void OnNext(IStreamData data)
     {
-      get { return _tabControl; }
-      set
-      {
-        if (_tabControl == value) return;
-        _tabControl = value;
-        NotifyOfPropertyChange(() => TabControl);
-      }
+      Bitmap image;
+      if (data.TryGetBitmap(StreamType.StreamTypeColor, out image))
+        Image.UpdateImageSource(BitmapConversion.BitmapToBitmapImage(image));
     }
 
-    private object _flyoutControl;
-    public object FlyoutControl
+    public void OnError(DeviceException exception)
     {
-      get { return _flyoutControl; }
-      set
-      {
-        if (_flyoutControl == value) return;
-          _flyoutControl = value;
-        NotifyOfPropertyChange(() => FlyoutControl);
-      }
+      _logger?.Error(exception);
     }
 
-    private object _statusContol;
-    public object StatusControl
+    public void OnState(IDeviceState state)
     {
-      get { return _statusContol; }
-      set
-      {
-        if (_statusContol == value) return;
-          _statusContol = value;
-        NotifyOfPropertyChange(() => StatusControl);
-      }
-    }
-
-    private object _loginInformation;
-    public object LoginInformation
-    {
-      get { return _loginInformation; }
-      set
-      {
-        if (_loginInformation == value) return;
-        _loginInformation = value;
-        NotifyOfPropertyChange(() => LoginInformation);
-      }
+      _logger?.Trace("Webcamera state " + state.State);
     }
   }
 }
